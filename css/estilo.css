@@ -1,11 +1,13 @@
 body{
 	font-family: 'Raleway', sans-serif;
+	font-weight: 400;
+  	color: #6c7279; 
 }
 
-header{
-	background: url('../img/background_header.jpg') no-repeat;
-	height: 405px;
-	background-size: cover;
+#header{
+	width: 100%;
+	z-index: 999;
+	position: fixed;
 }
 #logotipo{
 	margin-top: 40px
@@ -13,6 +15,9 @@ header{
 
 header .nav {
 	justify-content: flex-end;
+	border-bottom: 0px;
+    padding: 40px 0;
+    width: 100%;
 }
 
 header .nav-link {
@@ -24,5 +29,60 @@ header .nav-link {
 header .nav-link:hover{
 	background: #fff;
 	color: #31344e;
+}
+
+header .logo{
+	float: left; 
+}
+
+header .row{
+	border-bottom: 1px solid #51546a;
+	max-width: 1500px;
+    margin: 0 auto;
+    padding: 0px 0;
+    width: 100%;
+}
+
+header .col-lg-3{
+	border-bottom: 0px;
+    padding: 50px 0;
+    width: 100%;
+}
+
+.top {
+	background: url('../img/Rectangle.png') no-repeat;  
+  	background-position: center;
+  	background-size: cover;
+  	height: 750px;
+}
+
+.top-text {
+  padding-top: 250px;
+  font-weight: 1000;
+
+}
+  .top-text h1 {
+    color: #fff;
+    font-size: 55px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 50px; 
+
+
+}
+  .top-text p {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 1.5;
+    margin-bottom: 80px; 
+}
+
+	.btn {
+ 	 background-color: #e84545;
+  	color: #fff;
+  	font-size: 13px;
+  	font-weight: 600;
+     padding: 15px 40px;
 }
 
