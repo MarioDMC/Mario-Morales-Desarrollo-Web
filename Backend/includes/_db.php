@@ -1,5 +1,5 @@
 <?php 
-$server = "smoothoperators.com.mx";
+/*$server = "smoothoperators.com.mx";
  $db = "smoothop_segundo_parcial";
  $user = "smoothop_db" ;
  $password = "Goodluck13";
@@ -14,4 +14,13 @@ $mysqli = new mysqli($server, $user, $password, $db);
 	}
 
 	print_r($mysqli);
- ?>
+	*/
+try{
+	$db = new PDO('mysql:host=smoothoperators.com.mx; dbname=smoothop_segundo_parcial', 'smoothop_db', 'Goodluck13');
+	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	} catch(PDOException $ex) {
+    echo "An Error occured!"; 
+    some_logging_function($ex->getMessage());
+}
+   
+?>

@@ -30,27 +30,35 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>	
 <script>
     $("#buttonSign").click(function(){
-    // Valor de email
     let mail = $("#inputEmail").val();
-    // Valor de Password
     let pswd = $("#inputPassword").val();
     let obj = {
-      "accion" : "valor",
-      "usuario" : mail,
+      "action" : "login",
+      "mail" : mail,
       "password" : pswd  
     };
-    $.post('includes/_funciones.php', obj, function() {
 
-    });
+    if (mail == "" && pswd == "") {
+       alert("Ingresa Usuario y Contraseña (3)");
+    
+    }  
+    else if( mail == "" ) {
+    
+      alert("Ingresa Un Usuario")
+    
+    }
+    else if (pswd == "") {
 
-    // Validar los valores
-    // En caso de ser valido,redireccionar a usuarios.php
-    // En cado se no ser valodo enviar mensaje de rror y denega el acceso
+      alert("Ingresa Una Contraseña")
+
+    }
+    else{
+
+    $.post('includes/_funciones.php', obj, function() {});
+
+    }
+    
 });
-
 </script>
-
-
-
 </body>
 </html>
