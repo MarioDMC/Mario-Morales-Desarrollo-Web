@@ -50,19 +50,19 @@ $(function() {
        $("#infoS").hide();  
 
      if (r == "4") {
-       $("#infoD").html("Ingresa Email y Contraseña").fadeIn(); 
-
-     } else if (r == "2"){
-       $("#infoD").html("Email Invalido").fadeIn(); 
+       $("#infoD").html("Ingresa Email y Contraseña (4)").fadeIn(); 
 
      } else if (r == "3"){
-       $("#infoD").html("Ingresa Contraseña").fadeIn(); 
+       $("#infoD").html("Ingresa Contraseña (3)").fadeIn(); 
+
+     } else if (r == "2"){
+       $("#infoD").html("Email Invalido (2)").fadeIn(); 
 
      } else if (r == "1"){
-       $("#infoD").html("Contraseña Incorrecta").fadeIn(); 
+       $("#infoD").html("Contraseña Incorrecta (1)").fadeIn(); 
 
      } else{
-       $("#infoS").html("Acceso Correcto").fadeIn();
+       $("#infoS").html("Acceso Correcto (0)").fadeIn();
      }
 
     });
