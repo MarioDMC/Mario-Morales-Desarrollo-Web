@@ -21,7 +21,10 @@
       <input type="checkbox" value="remember-me"> Recordar
     </label>
   </div>
-  <button class="btn btn-lg btn-primary btn-block" id= "buttonSign" type="button">Iniciar</button>
+  <button class="btn btn-lg btn-primary btn-block" id= "buttonSign" type="button">Iniciar Sesión</button>
+  </br>
+  <div class="alert alert-danger" id="infoD" style="display: none;"></div>
+  <div class="alert alert-success" id="infoS" style="display: none;"></div>
   <p class="mt-5 mb-3 text-muted">&copy; 2017-2019</p>
 </form>
 
@@ -29,35 +32,41 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>	
 <script>
+$(function() {
+
     $("#buttonSign").click(function(){
     let mail = $("#inputEmail").val();
     let pswd = $("#inputPassword").val();
     let obj = {
       "action" : "login",
       "mail" : mail,
-      "password" : pswd  
+      "password" : pswd 
+
     };
 
-    if (mail == "" && pswd == "") {
-       alert("Ingresa Usuario y Contraseña (3)");
-    
-    }  
-    else if( mail == "" ) {
-    
-      alert("Ingresa Un Usuario")
-    
-    }
-    else if (pswd == "") {
+    $.post('includes/_funciones.php', obj,  function(r){  
 
-      alert("Ingresa Una Contraseña")
+       $("#infoD").hide(); 
+       $("#infoS").hide();  
 
-    }
-    else{
+     if (r == "4") {
+       $("#infoD").html("Ingresa Email y Contraseña").show(); 
 
-    $.post('includes/_funciones.php', obj, function() {});
+     } else if (r == "2"){
+       $("#infoD").html("Email Invalido").show(); 
 
-    }
-    
+     } else if (r == "3"){
+       $("#infoD").html("Ingresa Contraseña").show(); 
+
+     } else if (r == "1"){
+       $("#infoD").html("Contraseña Incorrecta").show(); 
+
+     } else{
+       $("#infoS").html("Acceso Correcto").show();
+     }
+
+    });
+    });
 });
 </script>
 </body>
