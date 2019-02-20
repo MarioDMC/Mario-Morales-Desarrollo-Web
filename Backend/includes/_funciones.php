@@ -5,10 +5,12 @@ switch ($_POST["action"]) {
 	case 'login':
 		login();
 		break;
-
-default:
+	case 'consultar_usuarios':
+		consultar_usuarios();
+		break;
+	default:
  
-break;
+		break;
 
 }
 
@@ -49,6 +51,16 @@ function login(){
 				}
 	    	}
 	    }
+	 }
+
+	 function consultar_usuarios(){
+	 	global $db;
+	 	$query = "SELECT * FROM smoothop_segundo_parcial.usuarios";
+    	$array = [];
+    	foreach($db->query($query) as $fila){
+			array_push($array, $fila);
+					}
+    	echo json_encode($array);
 	 }
 
  ?>
