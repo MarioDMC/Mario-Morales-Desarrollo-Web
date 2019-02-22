@@ -8,10 +8,6 @@ body {
   vertical-align: text-bottom;
 }
 
-/*
- * Sidebar
- */
-
 .sidebar {
   position: fixed;
   top: 0;
@@ -103,4 +99,24 @@ body {
 .form-control-dark:focus {
   border-color: transparent;
   box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+}
+
+.bd-placeholder-img {
+  font-size: 1.125rem;
+  text-anchor: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.has-error{
+  border: 1px solid red;
+}
+
+
+@media (min-width: 768px) {
+   .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+   }
 }
