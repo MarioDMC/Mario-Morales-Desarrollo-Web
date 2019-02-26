@@ -27,11 +27,15 @@
             </nav>
         </div>
     </header>
-                <div class="top-text" align="center">
-                    <h1>YOUR FAVORITE ONE PAGE </br> MULTI PURPOSE TEMPLATE</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna </br> vel scelerisque nisl consectetur et.</p>
-                    <a href="#" class="btn" align="center">FIND OUT MORE</a>
+    <div class="container">
+        <div class= "col-md-10 col-md-offset-1">  
+                <div class="top-text text-center">
+                    <h1 id="titleHeader"></h1>
+                    <p id="contentHeader"></p>
+                    <a href="" class="btn" align="center" id="linkHeader"></a>
             </div>
+             </div>
+         </div>
         </section>
 
         <!-- Parte blanca del body -->
@@ -176,20 +180,17 @@
                 <div class="row">
                     <div class="col-md-4  footer-col text-center">
                         <h5>Location</h5>
-                        <p>3481 Melrose Place<br>Beverly Hills, CA 90210</p>
+                        <p id="locationContent"></p>
                     </div>
                     <div class="col-md-4  footer-col text-center">
                         <h5>SHARE WITH LOVE</h5>
-                        <div class="share">
-                            <li><a href="#"><img src="img/facebook.png" alt=""></a></li>
-                            <li><a href="#"><img src="img/twitter.png" alt=""></a></li>
-                            <li><a href="#"><img src="img/linkedin.png" alt=""></a></li>
+                        <div class="share" id="share_footer">
 
                         </div>
                     </div>
                     <div class="col-md-4 footer-col text-center">
                         <h5>ABOUT ACTIVEBOX</h5>
-                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec ullamcorper nulla non metus auctor fringilla.</p>
+                        <p id="aboutContent"></p>
                     </div>
                 </div>
             </div>
@@ -197,15 +198,97 @@
         <div class="footer-bottom">
             <div class="container">
                 <div class="col-md-12 text-center">
-                    <p>Copyright © 2015 ActiveBox. All Rights Reserved<br>Made with <i class="heart">&#127892</i> by <a href="">Kamal Chaneman</a></p>
+                    <p id="copyright"></a></p>
                 </div>
             </div>
         </div>
     </footer>
     
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+<script>
+
+function consultarHeader(){
+
+    let obj = {
+      "action" : "consultar_header"
+    };
+
+    $.post('Backend/includes/_funciones.php', obj, function(r) {
+     let title = ``;
+     let content = ``;
+     let link = ``;
+     let href = ``;
+
+    $.each(r, function(i, e) {
+
+    title += `${e.title_header}`;
+    content += `${e.content_header}`;
+    link += `${e.link_header}`;
+    href += `${e.href_header}`;
+
+    }); 
+
+    $("#titleHeader").html(title);
+    $("#contentHeader").html(content);
+    $("#linkHeader").html(link);
+    $("#linkHeader").attr("href", href);
+
+    }, "JSON");
+   };
+
+   function consultarFooter(){
+
+    let obj = {
+      "action" : "consultar_footer"
+    };
+
+    $.post('Backend/includes/_funciones.php', obj, function(r) {
+     let location = ``;
+     let about = ``;
+     let copy = ``;
+
+    $.each(r, function(i, e) {
+
+    location += `${e.location_content_footer}`;
+    about += `${e.about_content_footer}`;
+    copy += `${e.location_content_footer}`;
+
+    }); 
+
+    $("#locationContent").html(location);
+    $("#aboutContent").html(about);
+    $("#copyright").html(copy);
+
+    }, "JSON");
+   };
+
+   function consultarshareFooter(){
+     let template = ``;
+    let obj = {
+      "action" : "consultar_shareFooter"
+    };
+
+    $.post('Backend/includes/_funciones.php', obj, function(s) {
+    
+    template = s
+
+    $("#share_footer").html(template);
+
+    }, "JSON");
+   };
+
+    $(document).ready(function(){
+    consultarHeader();
+    consultarFooter();
+    consultarshareFooter();
+
+  }); 
+
+</script>
+
 </body>
 </html>

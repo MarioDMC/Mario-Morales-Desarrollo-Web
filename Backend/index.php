@@ -63,6 +63,7 @@ $(function() {
 
      } else{
        $("#infoS").html("Acceso Correcto (0)").fadeIn();
+       window.location.replace("usuarios.php");
      }
 
     });

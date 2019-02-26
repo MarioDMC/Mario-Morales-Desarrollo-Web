@@ -153,6 +153,15 @@
    }
   });
 
+   if (mail == "" || pswd == "" || tel == "" || nombre == "") {
+
+    $("#infoD").html("Completa Todos los Campos").fadeIn(); 
+
+    }else{
+
+    $("#infoD").hide(); 
+    $("#infoS").hide();  
+
    $.post('includes/_funciones.php', obj, function(a) {
 
     if (a == "1") {
@@ -163,6 +172,8 @@
      }
 
    });
+
+   }
 
 });
   $("#main").find(".cancelar").click(function() {

@@ -11,6 +11,27 @@ switch ($_POST["action"]) {
 	case 'insertar_usuarios':
 		insertar_usuarios();
 		break;
+	case 'consultar_header':
+		consultar_header();
+		break;
+	case 'consultar_footer':
+		consultar_footer();
+		break;
+	case 'consultar_shareFooter':
+		consultar_shareFooter();
+		break;	
+
+	case 'consultar_slider':
+		consultar_slider();
+		break;
+
+	case 'insertar_slider':
+		insertar_slider();
+		break;	
+
+	case 'update_header':
+		update_header();
+		break;	
 
 	default:
  
@@ -85,5 +106,72 @@ function login(){
 
 	 }
 
+	 function consultar_header(){
+	 	global $db;
+	 	$query = "SELECT * FROM smoothop_segundo_parcial.header";
+    	$stmt = $db->prepare($query);
+    	$stmt->execute();
+    	$fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    	echo json_encode($fila);
+
+	 }
+
+	 function consultar_footer(){
+	 	global $db;
+	 	$query = "SELECT * FROM smoothop_segundo_parcial.footer";
+    	$stmt = $db->prepare($query);
+    	$stmt->execute();
+    	$fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    	echo json_encode($fila);
+
+	 }
+
+	 function consultar_shareFooter(){
+	 	global $db;
+	 	$query = "SELECT * FROM smoothop_segundo_parcial.share_footer WHERE status_share_footer = 1";
+	 	$array = [];
+    	foreach($db->query($query) as $fila) {
+
+    	$temp =	"<li><a href='".$fila['link_share_footer']."' ><img src='".$fila['icon_share_footer']."'alt=''></a></li>" ; 
+
+    	echo $temp;
+	
+		  }
+
+	   }
+
+	function update_header(){
+	$titulo= $_POST["titulo"];
+	$texto= $_POST["texto"];
+	$boton = $_POST["boton"];
+	$link = $_POST["link"];
+
+	 	global $db;
+	 	$stmt = $db->prepare("UPDATE smoothop_segundo_parcial.header SET title_header =?, content_header =?, link_header =?, href_header =? WHERE id_header = 1");
+	 	$stmt->execute(array($titulo, $texto, $boton, $link));
+	 	$affected_rows = $stmt->rowCount();
+	 	if ($affected_rows > 0) {
+	 		echo "1";
+	 	} else {
+	 		echo"0";
+	 	}
+	 }
+
+	 function footer_header(){
+	$titulo= $_POST["titulo"];
+	$texto= $_POST["texto"];
+	$boton = $_POST["boton"];
+	$link = $_POST["link"];
+
+	 	global $db;
+	 	$stmt = $db->prepare("UPDATE smoothop_segundo_parcial.footer SET title_header =?, content_header =?, link_header =?, href_header =? WHERE id_header = 1");
+	 	$stmt->execute(array($titulo, $texto, $boton, $link));
+	 	$affected_rows = $stmt->rowCount();
+	 	if ($affected_rows > 0) {
+	 		echo "1";
+	 	} else {
+	 		echo"0";
+	 	}
+	 }
 
  ?>

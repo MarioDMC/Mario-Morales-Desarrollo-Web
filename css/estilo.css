@@ -98,20 +98,20 @@ header .col-lg-3{
   .top-text {
   padding-top: 120px;
   font-weight: 1000;
+  text-align: center;
 
 }
   .top-text h1 {
     color: #fff;
-    font-size: 55px;
-    font-weight: 800;
-    letter-spacing: 2px;
+    font-size: 65px;
+    font-weight: 700;
     margin-bottom: 50px; 
 
 
 }
   .top-text p {
     color: #fff;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 300;
     line-height: 1.5;
     margin-bottom: 80px; 
@@ -201,4 +201,16 @@ footer {
     color: #e84545; 
     font-size: 14px;
     margin: 0 2px;
+}
+
+@media (min-width: 992px) {
+    .col-md-offset-1 {
+       margin-left: 8.33333333%
+    }
+}
+
+@media (min-width: 992px) {
+    .col-md-10 {
+       width: auto;
+    }
 }

@@ -3,7 +3,7 @@ function consultar_header()	{
       "action" : "consultar_header"
     };
 
-        $.post('includes/_funciones.php', obj, function(r) {
+     $.post('includes/_funciones.php', obj, function(r) {
      let template = ``;
     $.each(r, function(i, e) {
     template += `

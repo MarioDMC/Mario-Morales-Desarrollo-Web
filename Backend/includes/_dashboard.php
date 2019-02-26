@@ -19,14 +19,8 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="header.php">
-              Header <span class="sr-only"></span>
-              
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="bottom.php">
-              Bottom <span class="sr-only"></span>
+            <a class="nav-link" href="header&bottom.php">
+              Header & Botton <span class="sr-only"></span>
               
             </a>
           </li>
