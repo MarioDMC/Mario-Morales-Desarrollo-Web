@@ -21,6 +21,8 @@
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" id="main">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Usuarios</h1>
+        <div class="alert alert-danger" id="infoD" style="display: none;"></div>
+        <div class="alert alert-success" id="infoS" style="display: none;"></div>
         <div class="btn-toolbar mb-2 mb-md-0">
           <div class="btn-group mr-2">
             <button type="button" class="btn btn-sm btn-outline-danger cancelar">Cancelar</button>
@@ -71,8 +73,6 @@
        <div class="col">
          <button type="button" class="btn btn-success " id="guardar_datos">Guardar</button>
        </div>
-        <div class="alert alert-danger" id="infoD" style="display: none;"></div>
-        <div class="alert alert-success" id="infoS" style="display: none;"></div>
      </div>
      </div>
        </form>
@@ -112,8 +112,8 @@
               <td>${e.nombre_usr}</td>
               <td>${e.telefono_usr}</td>
               <td>
-                <a href="#" data-id="${e.id_usr}">Editar</a>
-                <a href="#" data-id="${e.id_usr}">Eliminar</a>
+                <a href="#" data-id="${e.id_usr}" class="editar_registro">Editar</a>
+                <a href="#" data-id="${e.id_usr}" class="eliminar_registro">Eliminar</a>
               </td>
             </tr>
           `;
@@ -155,20 +155,17 @@
 
    if (mail == "" || pswd == "" || tel == "" || nombre == "") {
 
-    $("#infoD").html("Completa Todos los Campos").fadeIn(); 
+    $("#infoD").html("Completa Todos los Campos").show().delay(2000).fadeOut(400);
 
     }else{
-
-    $("#infoD").hide(); 
-    $("#infoS").hide();  
 
    $.post('includes/_funciones.php', obj, function(a) {
 
     if (a == "1") {
-       $("#infoS").html("Usuario Insertado Correctamente").fadeIn(); 
+       $("#infoS").html("Usuario Insertado Correctamente").show().delay(2000).fadeOut(400); 
        $("#form_data")[0].reset();
      } else {
-       $("#infoD").html("Error al Insertar Usuario").fadeIn(); 
+       $("#infoD").html("Error al Insertar Usuario").show().delay(2000).fadeOut(400);
      }
 
    });
@@ -176,6 +173,37 @@
    }
 
 });
+
+  $("#list_usuarios").on("click",".eliminar_registro", function(e){
+
+    e.preventDefault();
+
+    let c = confirm('Desea Eliminar Este Registro');
+    if (c) {
+       let id = $(this).data('id');
+       obj = {
+        "action" : "eliminar_registro",
+        "registro" : id
+       };
+       $.post('includes/_funciones.php', obj, function(i) {
+
+       if (i == "1") {
+       $("#infoS").html("Usuario Eliminado Correctamente").show().delay(2000).fadeOut(400);
+      
+       consultar();
+     } else {
+       $("#infoD").html("Error al Eliminar Usuario").show().delay(2000).fadeOut(400);
+      
+     }
+
+       });
+
+    }else{
+      $("#infoD").html("El Registro No Se Ha Elimnado").show().delay(2000).fadeOut(400);
+      
+    }
+  });
+
   $("#main").find(".cancelar").click(function() {
     change_view();
     $("#form_data")[0].reset();
@@ -183,4 +211,4 @@
 
 </script>
 </body>
-</html>
+</html>  

@@ -20,18 +20,20 @@ switch ($_POST["action"]) {
 	case 'consultar_shareFooter':
 		consultar_shareFooter();
 		break;	
-
 	case 'consultar_slider':
 		consultar_slider();
 		break;
-
 	case 'insertar_slider':
 		insertar_slider();
 		break;	
-
 	case 'update_header':
 		update_header();
 		break;	
+	case 'eliminar_registro':
+		eliminar_usuarios($registro= $_POST["registro"]);
+		break;	
+
+
 
 	default:
  
@@ -87,6 +89,21 @@ function login(){
 					}
     	echo json_encode($array);
 	 }
+
+	  function eliminar_usuarios($id){
+	 	global $db;
+	 	$query = "DELETE FROM smoothop_segundo_parcial.usuarios WHERE id_usr =?";
+	 	$stmt = $db->prepare($query);
+    	$stmt->execute(array($id));
+    	$row_count = $stmt->rowCount();
+				if ($row_count == 1) {
+					echo "1";
+				}
+				else{
+					echo "0";
+				}
+	 }
+
 
 	function insertar_usuarios(){
 	$nombre= $_POST["nombre"];

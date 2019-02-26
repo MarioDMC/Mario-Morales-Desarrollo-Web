@@ -93,11 +93,6 @@
                 </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col">
-                <button type="button" class="btn btn-success" id="guardar_datos" ">Guardar</button>
-              </div>
-            </div>
           </form>
         </div>
          </main>
