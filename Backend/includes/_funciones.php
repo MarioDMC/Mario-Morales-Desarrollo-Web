@@ -32,6 +32,12 @@ switch ($_POST["action"]) {
 	case 'eliminar_registro':
 		eliminar_usuarios($registro= $_POST["registro"]);
 		break;	
+	case 'editar_registro':
+		editar_usuarios($registro= $_POST["registro"]);
+		break;	
+	case 'consultar_registro':
+		consultar_registro($registro= $_POST["registro"]);
+		break;
 
 
 
@@ -121,6 +127,47 @@ function login(){
 	 		echo"0";
 	 	}
 
+	 }
+
+	 	 function editar_header($id){
+		$titulo= $_POST["titulo"];
+		$texto= $_POST["texto"];
+		$boton = $_POST["boton"];
+		$link = $_POST["link"];
+	 	global $db;
+	 	$stmt = $db->prepare("UPDATE smoothop_segundo_parcial.footer SET title_header =?, content_header =?, link_header =?, href_header =? WHERE id_header = 1");
+	 	$stmt->execute(array($titulo, $texto, $boton, $link));
+	 	$affected_rows = $stmt->rowCount();
+	 	if ($affected_rows > 0) {
+	 		echo "1";
+	 	} else {
+	 		echo"0";
+	 	}
+	 }
+
+function editar_regitro($id){
+	 	$nombre= $_POST["nombre"];
+		$tel= $_POST["tel"];
+		$mail = $_POST["mail"];
+		$pswd = $_POST["password"];
+	 global $db;
+	 	$stmt = $db->prepare("UPDATE smoothop_segundo_parcial.header SET title_header =?, content_header =?, link_header =?, href_header =? WHERE id_header = 1");
+	 	$stmt->execute(array($titulo, $texto, $boton, $link));
+	 	$affected_rows = $stmt->rowCount();
+	 	if ($affected_rows > 0) {
+	 		echo "1";
+	 	} else {
+	 		echo"0";
+	 	}
+	 }
+
+ function consultar_registro($id){
+	 	global $db;
+	 	$query = "SELECT * FROM smoothop_segundo_parcial.usuarios WHERE id_usr = $id";
+    	$stmt = $db->prepare($query);
+    	$stmt->execute();
+    	$fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    	echo json_encode($fila);
 	 }
 
 	 function consultar_header(){

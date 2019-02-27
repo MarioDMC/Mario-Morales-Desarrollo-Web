@@ -121,11 +121,6 @@
     $("#list_usuarios tbody").html(template);
   }, "JSON");
   }
-  $(document).ready(function(){
-    consultar();
-    change_view();
-  }); 
-
   $("#nuevo_registro").click(function() {
    change_view('insert_data');
    });
@@ -174,6 +169,8 @@
 
 });
 
+$(function eliminar_registro(){
+
   $("#list_usuarios").on("click",".eliminar_registro", function(e){
 
     e.preventDefault();
@@ -195,19 +192,74 @@
        $("#infoD").html("Error al Eliminar Usuario").show().delay(2000).fadeOut(400);
       
      }
-
        });
-
     }else{
-      $("#infoD").html("El Registro No Se Ha Elimnado").show().delay(2000).fadeOut(400);
+      $("#infoD").html("El Registro No Se a Eliminado").show().delay(2000).fadeOut(400);
       
     }
   });
+     });
+
+  $(function  consultar_registro(){
+      $("#list_usuarios").on("click",".editar_registro", function(e){
+    let id = $(this).data('id');
+    let obj = {
+      "action" : "consultar_registro",
+      "registro" : id
+    };
+
+    $.post('includes/_funciones.php', obj, function(r) {
+
+    $("#").html();
+  }, "JSON");
+  });
+  });
+
+
+    $(function editar_registro(){
+  $("#list_usuarios").on("click",".editar_registro", function(k){
+    change_view('insert_data');
+  });
+
+  $("#list_usuarios").on("click",".editar_registro", function(e){
+
+       let id = $(this).data('id');
+       obj = {
+        "action" : "editar_registro",
+        "registro" : id,
+         "nombre" : nombre,
+          "tel" : tel,
+          "mail" : mail,
+          "password" : pswd
+       };
+
+       $.post('includes/_funciones.php', obj, function(r) {
+
+       if (r == "1") {
+       $("#infoS").html("Cambios Guardados Correctamente").show().delay(2000).fadeOut(400);
+       $("#form_data")[0].reset();
+      
+       consultar();
+     } else {
+       $("#infoD").html("Error al Guardar Cambios").show().delay(2000).fadeOut(400);
+      
+     }
+
+       });
+     });
+  });
+
 
   $("#main").find(".cancelar").click(function() {
     change_view();
     $("#form_data")[0].reset();
   });
+
+  $(document).ready(function(){
+    consultar();
+    change_view();
+  }); 
+
 
 </script>
 </body>
