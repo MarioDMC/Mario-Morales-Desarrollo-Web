@@ -22,7 +22,7 @@
                 <li class="nav-item"><a class="nav-link" href="#">WORKS</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">OUR TEAM</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">TESTIMONIAL</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">DOWNLOADS</a></li>
+                <li class="nav-item"><a class="nav-link" href="#download">DOWNLOADS</a></li>
             </ul>
             </nav>
         </div>
@@ -163,7 +163,7 @@
 
 
     <section>
-        <div class="container">
+        <div class="container" id="download">
              <div  class="download" align="center">
             <div class="col-md-8 col-md-offset-2 text-center">
                 <h3>Are You Ready to Start? Download Now For Free!</h3>
@@ -211,82 +211,50 @@
 
 <script>
 
-function consultarHeader(){
+$(function consultarHeader(){
 
     let obj = {
       "action" : "consultar_header"
     };
 
     $.post('Backend/includes/_funciones.php', obj, function(r) {
-     let title = ``;
-     let content = ``;
-     let link = ``;
-     let href = ``;
 
-    $.each(r, function(i, e) {
 
-    title += `${e.title_header}`;
-    content += `${e.content_header}`;
-    link += `${e.link_header}`;
-    href += `${e.href_header}`;
-
-    }); 
-
-    $("#titleHeader").html(title);
-    $("#contentHeader").html(content);
-    $("#linkHeader").html(link);
-    $("#linkHeader").attr("href", href);
+    $("#titleHeader").html(r.title_header);
+    $("#contentHeader").html(r.content_header);
+    $("#linkHeader").html(r.link_header);
+    $("#linkHeader").attr("href", r.href_header);
 
     }, "JSON");
-   };
+   });
 
-   function consultarFooter(){
+   $(function consultarFooter(){
 
     let obj = {
       "action" : "consultar_footer"
     };
 
     $.post('Backend/includes/_funciones.php', obj, function(r) {
-     let location = ``;
-     let about = ``;
-     let copy = ``;
 
-    $.each(r, function(i, e) {
-
-    location += `${e.location_content_footer}`;
-    about += `${e.about_content_footer}`;
-    copy += `${e.location_content_footer}`;
-
-    }); 
-
-    $("#locationContent").html(location);
-    $("#aboutContent").html(about);
-    $("#copyright").html(copy);
+    $("#locationContent").html(r.location_content_footer);
+    $("#aboutContent").html(r.about_content_footer);
+    $("#copyright").html(r.location_content_footer);
 
     }, "JSON");
-   };
+   });
 
-   function consultarshareFooter(){
-     let template = ``;
+    $(function consultarshareFooter(){
     let obj = {
       "action" : "consultar_shareFooter"
     };
 
-    $.post('Backend/includes/_funciones.php', obj, function(s) {
+    $.post('Backend/includes/_funciones.php', obj, function(e) {
     
-    template = s
-
-    $("#share_footer").html(template);
+    $("#share_footer").html(e);
 
     }, "JSON");
-   };
+   });
 
-    $(document).ready(function(){
-    consultarHeader();
-    consultarFooter();
-    consultarshareFooter();
-
-  }); 
 
 </script>
 

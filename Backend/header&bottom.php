@@ -1,3 +1,13 @@
+<?php
+  session_start();
+  error_reporting(0);
+  $varsesion = $_SESSION['user'];
+
+  if (isset($varsesion)){
+
+  ?>
+
+<?php include("includes/_session.php") ?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -6,7 +16,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.5">
-    <title>Botton</title>
+    <title>Header & Bottom</title>
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
@@ -28,36 +38,42 @@
 
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" id="main">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Header & Bottom</h1>
+
+        <h1 class="h2">Header</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
+              <div class= "btn-group mr-2">  
+                         <form action="" enctype="form-data" id="form_data">               
+                <button type="button" class="btn btn-sm btn-outline-success" id="guardar_datos" ">Guardar</button>
+          </div>
         </div>
       </div>
-         <form action="" enctype="form-data" id="form_data">
+
             <div class="row">
               <div class="col">
                 <div class="form-group">
-                  <label for="texto">Titulo</label>
-                  <input type="text" id="titulo" name="titulo" class="form-control">
+                  <label for="tituloHeader">Title</label>
+                  <textarea id="tituloHeader" name="tituloHeader" class="form-control" rows="3" ></textarea>
                 </div>
                 <div class="form-group">
-                  <label for="texto">Texto</label>
-                  <input type="text" id="texto" name="texto" class="form-control">
+                  <label for="textoHeader">Text</label>
+                  <textarea  id="textoHeader" name="textoHeader" class="form-control" rows="3"></textarea>
                 </div>
               </div>
               <div class="col">
                 <div class="form-group">
-                  <label for="nombre">Texto Boton</label>
-                  <input type="name" id="boton" name="boton" class="form-control" >
+                  <label for="botonHeader">Button text</label>
+                  <textarea  id="botonHeader" name="botonHeader" class="form-control" rows="3"></textarea>
                 </div>
                 <div class="form-group">
-                  <label for="texto">Link</label>
-                  <input type="text" id="link" name="link" class="form-control">
+                  <label for="linkHeader">Link</label>
+                  <textarea id="linkHeader" name="linkHeader" class="form-control" rows="3"></textarea>
                 </div>
+
               </div>
             </div>
             <div class="row">
               <div class="col">
-                <button type="button" class="btn btn-success" id="guardar_datos" ">Guardar</button>
+
               </div>
             </div>
           </form>
@@ -66,7 +82,7 @@
 
        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" id="main">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Header & Bottom</h1>
+        <h1 class="h2">Bottom</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
         </div>
       </div>
@@ -74,22 +90,18 @@
             <div class="row">
               <div class="col">
                 <div class="form-group">
-                  <label for="texto">Titulo</label>
-                  <input type="text" id="titulo" name="titulo" class="form-control">
+                  <label for="texto">Location</label>
+                  <textarea id="locationFooter" name="locationFooter" class="form-control" rows="3"></textarea>
                 </div>
                 <div class="form-group">
-                  <label for="texto">Texto</label>
-                  <input type="text" id="texto" name="texto" class="form-control">
+                  <label for="aboutFooter">About</label>
+                 <textarea id="aboutFooter" name="aboutFooter" class="form-control" rows="3"></textarea>
                 </div>
               </div>
               <div class="col">
                 <div class="form-group">
-                  <label for="nombre">Texto Boton</label>
-                  <input type="name" id="boton" name="boton" class="form-control" >
-                </div>
-                <div class="form-group">
-                  <label for="texto">Link</label>
-                  <input type="text" id="link" name="link" class="form-control">
+                  <label for="copyrightFooter">Copyright</label>
+                  <textarea id="copyrightFooter" name="copyrightFooter" class="form-control" rows="3"></textarea>
                 </div>
               </div>
             </div>
@@ -97,14 +109,12 @@
         </div>
          </main>
 
-<script src="includes/_header.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>  
 <script>
 
 $(function updateHeader() {  
-  
   $("#guardar_datos").click(function() {
    let titulo = $("#titulo").val();
    let texto = $("#texto").val();
@@ -139,8 +149,49 @@ $(function updateHeader() {
   });
 });
 
+$(function consultarHeader(){
+
+    let obj = {
+      "action" : "consultar_header"
+    };
+
+    $.post('includes/_funciones.php', obj, function(r) {
+
+    $("#tituloHeader").val(r.title_header);
+    $("#textoHeader").val(r.content_header);
+    $("#botonHeader").val(r.link_header);
+    $("#linkHeader").val(r.href_header);
+    }, "JSON");
+
+   });
+
+$(function consultarFooter(){
+
+    let obj = {
+      "action" : "consultar_footer"
+    };
+
+    $.post('includes/_funciones.php', obj, function(r) {
+
+    $("#tituloHeader").val(r.title_header);
+    $("#textoHeader").val(r.content_header);
+    $("#botonHeader").val(r.link_header);
+    $("#linkHeader").val(r.href_header);
+    }, "JSON");
+    
+   });
+
+
 </script>
 <script>
 </script>
 </body>
 </html>
+
+<?php 
+  }
+  else 
+  {
+header("Location:index.php");
+  }
+?>

@@ -1,3 +1,12 @@
+<?php
+  session_start();
+  error_reporting(0);
+  $varsesion = $_SESSION['user'];
+
+  if (isset($varsesion)){
+
+  ?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -21,11 +30,13 @@
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" id="main">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Usuarios</h1>
+
         <div class="alert alert-danger" id="infoD" style="display: none;"></div>
         <div class="alert alert-success" id="infoS" style="display: none;"></div>
+
         <div class="btn-toolbar mb-2 mb-md-0">
           <div class="btn-group mr-2">
-            <button type="button" class="btn btn-sm btn-outline-danger cancelar">Cancelar</button>
+            <button type="button" class="btn btn-sm btn-outline-danger cancelar" id="cancelar">Cancelar</button>
             <button type="button" class="btn btn-sm btn-outline-success" id="nuevo_registro" >Nuevo</button>
           </div>
         </div>
@@ -46,7 +57,7 @@
         </table>
       </div>
        <div id="insert_data" class="view">
-       <form action="#" id="form_data">
+       <form action="#" id="form_data" enctype="multipart/form_data">
   <div class="row">
   <div class="col">
        <div class="form-group">
@@ -54,9 +65,11 @@
        <input type="text" id="nombre" name="nombre" class="form-control">
      </div>
        <div class="form-group">
-        <label for="correo">Correo</label>
-       <input type="email" id="email" name="email" class="form-control">
+        <label for="correo">Correo Electronico</label>
+       <input type="email" id="mail" name="mail" class="form-control">
        </div>
+
+       <div id="preview"></div>
        </div>
   <div class="col">
         <div class="form-group">
@@ -90,8 +103,8 @@
   function change_view(vista ='show_data'){
     $("#main").find(".view").each(function() {
       $(this).slideUp('fast');
-      let id=$(this).attr("id");
-      if (vista==id) {
+      let id = $(this).attr("id");
+      if (vista == id) {
         $(this).slideDown(300);
       }
       
@@ -125,15 +138,19 @@
    change_view('insert_data');
    });
 
+  $("#cancelar").click(function() {
+   consultar();
+   });
+
   $("#guardar_datos").click(function(r) {
    let nombre = $("#nombre").val();
-   let tel = $("#telefono").val();
-   let mail = $("#email").val();
+   let telefono = $("#telefono").val();
+   let mail = $("#mail").val();
    let pswd = $("#password").val();
    let obj ={
     "action" : "insertar_usuarios",
     "nombre" : nombre,
-    "tel" : tel,
+    "telefono" : telefono,
     "mail" : mail,
     "password" : pswd
    }
@@ -148,7 +165,13 @@
    }
   });
 
-   if (mail == "" || pswd == "" || tel == "" || nombre == "") {
+    if($(this).data("editar") == 1) {
+    obj["action"] = "editar_registro";
+    obj["id"] = $(this).data('id');
+    $(this).text("Guardar").removeData("editar").removeData("id");
+   }
+
+   if (mail == "" || pswd == "" || telefono == "" || nombre == "") {
 
     $("#infoD").html("Completa Todos los Campos").show().delay(2000).fadeOut(400);
 
@@ -159,8 +182,16 @@
     if (a == "1") {
        $("#infoS").html("Usuario Insertado Correctamente").show().delay(2000).fadeOut(400); 
        $("#form_data")[0].reset();
-     } else {
+     } else if(a == "0") {
        $("#infoD").html("Error al Insertar Usuario").show().delay(2000).fadeOut(400);
+     }
+     else if (a == "2") {
+       $("#infoS").html("Usuario Editado Correctamente").show().delay(2000).fadeOut(400);
+       $("#form_data")[0].reset();
+     }
+     else if(a == "3") {
+       $("#infoD").html("Error al Editar el Usuario").show().delay(2000).fadeOut(400);
+
      }
 
    });
@@ -169,18 +200,14 @@
 
 });
 
-$(function eliminar_registro(){
-
   $("#list_usuarios").on("click",".eliminar_registro", function(e){
-
     e.preventDefault();
-
     let c = confirm('Desea Eliminar Este Registro');
     if (c) {
        let id = $(this).data('id');
        obj = {
         "action" : "eliminar_registro",
-        "registro" : id
+        "id" : id
        };
        $.post('includes/_funciones.php', obj, function(i) {
 
@@ -198,61 +225,24 @@ $(function eliminar_registro(){
       
     }
   });
-     });
 
-  $(function  consultar_registro(){
-      $("#list_usuarios").on("click",".editar_registro", function(e){
+    $("#list_usuarios").on("click",".editar_registro", function(e){
+    e.preventDefault();
+    $("#form_data")[0].reset();
+    change_view('insert_data');
     let id = $(this).data('id');
     let obj = {
       "action" : "consultar_registro",
-      "registro" : id
-    };
+      "id" : id
+    }; 
 
+    $("#guardar_datos").text("Editar").data("editar", 1).data("id", id);   
     $.post('includes/_funciones.php', obj, function(r) {
-
-    $("#").html();
+     $("#nombre").val(r.nombre_usr);
+     $("#mail").val(r.correo_usr);
+     $("#telefono").val(r.telefono_usr);
+     $("#password").val(r.pswd_usr);
   }, "JSON");
-  });
-  });
-
-
-    $(function editar_registro(){
-  $("#list_usuarios").on("click",".editar_registro", function(k){
-    change_view('insert_data');
-  });
-
-  $("#list_usuarios").on("click",".editar_registro", function(e){
-
-       let id = $(this).data('id');
-       obj = {
-        "action" : "editar_registro",
-        "registro" : id,
-         "nombre" : nombre,
-          "tel" : tel,
-          "mail" : mail,
-          "password" : pswd
-       };
-
-       $.post('includes/_funciones.php', obj, function(r) {
-
-       if (r == "1") {
-       $("#infoS").html("Cambios Guardados Correctamente").show().delay(2000).fadeOut(400);
-       $("#form_data")[0].reset();
-      
-       consultar();
-     } else {
-       $("#infoD").html("Error al Guardar Cambios").show().delay(2000).fadeOut(400);
-      
-     }
-
-       });
-     });
-  });
-
-
-  $("#main").find(".cancelar").click(function() {
-    change_view();
-    $("#form_data")[0].reset();
   });
 
   $(document).ready(function(){
@@ -261,6 +251,19 @@ $(function eliminar_registro(){
   }); 
 
 
+  $("#main").find(".cancelar").click(function() {
+    change_view();
+    $("#form_data")[0].reset();
+  });
+
 </script>
 </body>
 </html>  
+
+<?php 
+  }
+  else 
+  {
+    header("Location:index.php");
+  }
+?>

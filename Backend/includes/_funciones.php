@@ -20,23 +20,17 @@ switch ($_POST["action"]) {
 	case 'consultar_shareFooter':
 		consultar_shareFooter();
 		break;	
-	case 'consultar_slider':
-		consultar_slider();
-		break;
-	case 'insertar_slider':
-		insertar_slider();
-		break;	
 	case 'update_header':
 		update_header();
 		break;	
 	case 'eliminar_registro':
-		eliminar_usuarios($registro= $_POST["registro"]);
+		eliminar_usuarios($registro= $_POST["id"]);
 		break;	
 	case 'editar_registro':
-		editar_usuarios($registro= $_POST["registro"]);
+		editar_registro($registro= $_POST["id"]);
 		break;	
 	case 'consultar_registro':
-		consultar_registro($registro= $_POST["registro"]);
+		consultar_registro($registro= $_POST["id"]);
 		break;
 
 
@@ -81,6 +75,9 @@ function login(){
 				else{
 				//Acceso Correcto
 					echo "0";
+					session_start();
+       				error_reporting(0);
+        			$_SESSION['user'] = $mail;
 				}
 	    	}
 	    }
@@ -113,10 +110,9 @@ function login(){
 
 	function insertar_usuarios(){
 	$nombre= $_POST["nombre"];
-	$tel= $_POST["tel"];
+	$tel= $_POST["telefono"];
 	$mail = $_POST["mail"];
 	$pswd = $_POST["password"];
-
 	 	global $db;
 	 	$stmt = $db->prepare("INSERT INTO smoothop_segundo_parcial.usuarios (id_usr, nombre_usr, correo_usr, pswd_usr, telefono_usr, status_usr)  VALUES ('',?,?,?,?,'1')");
 	 	$stmt->execute(array($nombre, $mail, $pswd, $tel));
@@ -129,44 +125,28 @@ function login(){
 
 	 }
 
-	 	 function editar_header($id){
-		$titulo= $_POST["titulo"];
-		$texto= $_POST["texto"];
-		$boton = $_POST["boton"];
-		$link = $_POST["link"];
-	 	global $db;
-	 	$stmt = $db->prepare("UPDATE smoothop_segundo_parcial.footer SET title_header =?, content_header =?, link_header =?, href_header =? WHERE id_header = 1");
-	 	$stmt->execute(array($titulo, $texto, $boton, $link));
-	 	$affected_rows = $stmt->rowCount();
-	 	if ($affected_rows > 0) {
-	 		echo "1";
-	 	} else {
-	 		echo"0";
-	 	}
-	 }
-
-function editar_regitro($id){
+function editar_registro($id){
 	 	$nombre= $_POST["nombre"];
-		$tel= $_POST["tel"];
+		$tel= $_POST["telefono"];
 		$mail = $_POST["mail"];
 		$pswd = $_POST["password"];
 	 global $db;
-	 	$stmt = $db->prepare("UPDATE smoothop_segundo_parcial.header SET title_header =?, content_header =?, link_header =?, href_header =? WHERE id_header = 1");
-	 	$stmt->execute(array($titulo, $texto, $boton, $link));
+	 	$stmt = $db->prepare("UPDATE smoothop_segundo_parcial.usuarios SET nombre_usr =?, correo_usr =?, pswd_usr =?, telefono_usr =? WHERE id_usr =? ");
+	 	$stmt->execute(array($nombre, $mail, $pswd, $tel, $id));
 	 	$affected_rows = $stmt->rowCount();
 	 	if ($affected_rows > 0) {
-	 		echo "1";
+	 		echo "2";
 	 	} else {
-	 		echo"0";
+	 		echo"3";
 	 	}
 	 }
 
  function consultar_registro($id){
 	 	global $db;
-	 	$query = "SELECT * FROM smoothop_segundo_parcial.usuarios WHERE id_usr = $id";
+	 	$query = "SELECT * FROM smoothop_segundo_parcial.usuarios WHERE id_usr =? LIMIT 1";
     	$stmt = $db->prepare($query);
-    	$stmt->execute();
-    	$fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    	$stmt->execute(array($id));
+    	$fila = $stmt->fetch(PDO::FETCH_ASSOC);
     	echo json_encode($fila);
 	 }
 
@@ -175,17 +155,18 @@ function editar_regitro($id){
 	 	$query = "SELECT * FROM smoothop_segundo_parcial.header";
     	$stmt = $db->prepare($query);
     	$stmt->execute();
-    	$fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    	$fila = $stmt->fetch(PDO::FETCH_ASSOC);
     	echo json_encode($fila);
 
 	 }
+
 
 	 function consultar_footer(){
 	 	global $db;
 	 	$query = "SELECT * FROM smoothop_segundo_parcial.footer";
     	$stmt = $db->prepare($query);
     	$stmt->execute();
-    	$fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    	$fila = $stmt->fetch(PDO::FETCH_ASSOC);
     	echo json_encode($fila);
 
 	 }
@@ -198,11 +179,12 @@ function editar_regitro($id){
 
     	$temp =	"<li><a href='".$fila['link_share_footer']."' ><img src='".$fila['icon_share_footer']."'alt=''></a></li>" ; 
 
-    	echo $temp;
+    	array_push($array, $temp);
+					}
+
+				echo json_encode($array);
 	
 		  }
-
-	   }
 
 	function update_header(){
 	$titulo= $_POST["titulo"];
@@ -221,7 +203,7 @@ function editar_regitro($id){
 	 	}
 	 }
 
-	 function footer_header(){
+	 function update_footer(){
 	$titulo= $_POST["titulo"];
 	$texto= $_POST["texto"];
 	$boton = $_POST["boton"];
