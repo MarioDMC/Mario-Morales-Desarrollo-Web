@@ -57,7 +57,7 @@
         </table>
       </div>
        <div id="insert_data" class="view">
-       <form action="#" id="form_data" enctype="multipart/form_data">
+       <form action="#" id="form_data" enctype="multipart/form-data">
   <div class="row">
   <div class="col">
        <div class="form-group">
@@ -68,7 +68,11 @@
         <label for="correo">Correo Electronico</label>
        <input type="email" id="mail" name="mail" class="form-control">
        </div>
-
+         <div class="form-group">
+       <input type="file" id="foto" name="foto"  accept="image/x-png,image/gif,image/jpeg">
+        <input type="hidden" id="ruta" name="ruta" readonly="readonly">
+       </div>
+        
        <div id="preview"></div>
        </div>
   <div class="col">
@@ -255,6 +259,29 @@
     change_view();
     $("#form_data")[0].reset();
   });
+
+
+$("#foto").on("change", function (e){
+ let formDatos = new FormData($("#form_data")[0]);
+ formDatos.append("action", "carga_foto");
+  $.ajax({
+    url: 'includes/_funciones.php',
+    type: 'POST',
+    data: formDatos,
+    contentType: false,
+    processData: false,
+    success: function(datos) {
+      let respuesta = JSON.parse(datos);
+      if (respuesta.status == 0){
+        alert("No cargó la foto");
+      }
+  let template = `<img src="${respuesta.archivo}" alt="" class="img-fluid" />`;
+  $("#ruta").val(respuesta.archivo);
+  $("#preview").html(template);
+    }
+  });
+  });
+  
 
 </script>
 </body>

@@ -32,13 +32,35 @@ switch ($_POST["action"]) {
 	case 'consultar_registro':
 		consultar_registro($registro= $_POST["id"]);
 		break;
-
-
+case 'carga_foto':
+		carga_foto();
+		break;
 
 	default:
  
 		break;
 
+}
+
+function carga_foto(){
+	if (isset($_FILES['foto'])) {
+		$file = $_FILES['foto'];
+		$nombre = $_FILES['foto']['name'];
+		$tipo = $_FILES['foto']['type'];
+		$temporal = $_FILES['foto']['tmp_name'];
+		$tam = $_FILES['foto']['size'];
+		$dir = "../../img/usuarios/";
+		$respuesta = [
+			"archivo" => "../img/usuarios/logotipo.png",
+			"status" => 0
+		];
+		if(move_uploaded_file($temporal, $dir.$nombre)){
+			$respuesta['archivo'] = "../img/usuarios/".$nombre;
+			$respuesta['status'] = 1;
+		}
+		echo json_encode($respuesta);
+
+	}
 }
 
 function login(){
