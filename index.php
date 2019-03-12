@@ -17,6 +17,7 @@
             <div class="col-lg-3">
                 <img src="img/ActiveBox.png" id="logo">
             </div>
+            <div class="awesome" id="button-movil"></div>
             <nav class="col-lg-7 offset-lg-2 menu-header-principal">
             <div class=" col-lg-7 offset-lg-2 menu-header-movil"></div>
             <ul class="nav">
@@ -29,7 +30,6 @@
             </nav>
         </div>
     </header>
-    <div class="container">
         <div class= "col-md-10 col-md-offset-1">  
                 <div class="top-text text-center">
                     <h1 id="titleHeader"></h1>
@@ -240,7 +240,7 @@ $(function consultarHeader(){
 
     $("#locationContent").html(r.location_content_footer);
     $("#aboutContent").html(r.about_content_footer);
-    $("#copyright").html(r.location_content_footer);
+    $("#copyright").html(r.copyright_content_footer);
 
     }, "JSON");
    });
