@@ -16,7 +16,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.5">
-    <title>Header & Bottom</title>
+    <title>Header</title>
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
@@ -40,6 +40,8 @@
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 
         <h1 class="h2">Header</h1>
+        <div class="alert alert-danger" id="infoDH" style="display: none;"></div>
+        <div class="alert alert-success" id="infoSH" style="display: none;"></div>
         <div class="btn-toolbar mb-2 mb-md-0">
               <div class= "btn-group mr-2">  
                          <form action="" enctype="form-data" id="form_data">               
@@ -80,46 +82,17 @@
         </div>
                 </main>
 
-       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" id="main">
-      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Bottom</h1>
-        <div class="btn-toolbar mb-2 mb-md-0">
-        </div>
-      </div>
-         <form action="" enctype="form-data" id="form_data">
-            <div class="row">
-              <div class="col">
-                <div class="form-group">
-                  <label for="texto">Location</label>
-                  <textarea id="locationFooter" name="locationFooter" class="form-control" rows="3"></textarea>
-                </div>
-                <div class="form-group">
-                  <label for="aboutFooter">About</label>
-                 <textarea id="aboutFooter" name="aboutFooter" class="form-control" rows="3"></textarea>
-                </div>
-              </div>
-              <div class="col">
-                <div class="form-group">
-                  <label for="copyrightFooter">Copyright</label>
-                  <textarea id="copyrightFooter" name="copyrightFooter" class="form-control" rows="3"></textarea>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-         </main>
-
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>  
 <script>
 
-$(function updateHeader() {  
-  $("#guardar_datos").click(function() {
-   let titulo = $("#titulo").val();
-   let texto = $("#texto").val();
-   let boton = $("#boton").val();
-   let link = $("#link").val();
+$(function updateHeader(){
+  $("#guardar_datos").click(function(){
+   let titulo = $("#tituloHeader").val();
+   let texto = $("#textoHeader").val();
+   let boton = $("#botonHeader").val();
+   let link = $("#linkHeader").val();
    let obj ={
     "action" : "update_header",
     "titulo" : titulo,
@@ -139,15 +112,21 @@ $(function updateHeader() {
 
   });
 
-   $.post('includes/_funciones.php', obj, function() {});
+   $.post('includes/_funciones.php', obj, function(i) {
+
+    if (i == "1") {
+       $("#infoSH").html("Actualizado Correctamente").show().delay(2000).fadeOut(400);
+       consultarHeader();
+
+     } else {
+       $("#infoDH").html("Error al Actualizar").show().delay(2000).fadeOut(400);
+      
+     }
 
    });
 
-  $("#main").find(".cancelar").click(function() {
-    change_view();
-    $("#form_data")[0].reset();
-  });
-});
+   });
+   });
 
 $(function consultarHeader(){
 
@@ -155,7 +134,7 @@ $(function consultarHeader(){
       "action" : "consultar_header"
     };
 
-    $.post('includes/_funciones.php', obj, function(r) {
+    $.post('includes/_funciones.php', obj, function(r){
 
     $("#tituloHeader").val(r.title_header);
     $("#textoHeader").val(r.content_header);
@@ -165,25 +144,6 @@ $(function consultarHeader(){
 
    });
 
-$(function consultarFooter(){
-
-    let obj = {
-      "action" : "consultar_footer"
-    };
-
-    $.post('includes/_funciones.php', obj, function(r) {
-
-    $("#tituloHeader").val(r.title_header);
-    $("#textoHeader").val(r.content_header);
-    $("#botonHeader").val(r.link_header);
-    $("#linkHeader").val(r.href_header);
-    }, "JSON");
-    
-   });
-
-
-</script>
-<script>
 </script>
 </body>
 </html>

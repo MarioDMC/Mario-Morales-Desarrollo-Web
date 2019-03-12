@@ -2,7 +2,6 @@
   session_start();
   error_reporting(0);
   $varsesion = $_SESSION['user'];
-
   if (isset($varsesion)){
 
   ?>
@@ -113,7 +112,6 @@
       }
       
     });
-
   }
 
   function  consultar(){
@@ -254,12 +252,10 @@
     change_view();
   }); 
 
-
   $("#main").find(".cancelar").click(function() {
     change_view();
     $("#form_data")[0].reset();
   });
-
 
 $("#foto").on("change", function (e){
  let formDatos = new FormData($("#form_data")[0]);

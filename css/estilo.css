@@ -214,3 +214,22 @@ footer {
        width: auto;
     }
 }
+
+
+@media (min-width: 320px) and (max-width: 767px){
+#logo{display :block; margin-top: 20px}
+#button-movil{color: #fff; font-size: 30px; position: absolute; right: 10px; top: 10px; display: block;}
+.menu-header-principal{display: none;}
+.menu-header-movil{display: block;}
+
+}
+
+
+@media (min-width: 768px)  and (max-width: 991px) {
+
+ }
+
+
+@media (min-width: 992px)  and (max-width: 1199px) { ... }
+
+@media (min-width: 1200px) { ... }

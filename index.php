@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Active Box -Un desarrollo de la unid</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Cardo:400,400i" rel="stylesheet">
     <link rel="stylesheet" href="css/estilo.css">
@@ -16,7 +17,8 @@
             <div class="col-lg-3">
                 <img src="img/ActiveBox.png" id="logo">
             </div>
-            <nav class="col-lg-7 offset-lg-2">
+            <nav class="col-lg-7 offset-lg-2 menu-header-principal">
+            <div class=" col-lg-7 offset-lg-2 menu-header-movil"></div>
             <ul class="nav">
                 <li class="nav-item"><a class="nav-link" href="#">FEATURES</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">WORKS</a></li>
